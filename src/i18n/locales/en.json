@@ -1,0 +1,21 @@
+{
+  "text_ip_address_not_found": "IP address not found or blocked",
+  "text_user_register_succ": "User Register Successfully",
+  "text_user_register_fail": "Something went wrong while registering user",
+  "text_internal_error": "{{error}}",
+  "text_user_already_exists": "User already exists.",
+  "text_invalid_api_key": "Invalid or missing API key",
+  "text_user_signup_succ": "User signed up successfully",
+  "text_user_signup_fail": "Failed to sign up user",
+  "text_user_login_succ": "User logged in successfully",
+  "text_user_login_fail": "Failed to log in user",
+
+  "text_invalid_email": "Please enter valid email address",
+  "text_invalid_password": "Invalid password",
+  "text_invalid_name": "Please enter name",
+  "text_invalid_email_or_password": "Invalid email or password",
+  "text_email_required": "Please enter email",
+  "text_password_required": "Please enter password",
+  "text_name_required": "Please enter name"
+
+}
