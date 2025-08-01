@@ -16,11 +16,7 @@ async function bootstrap() {
     const PORT = process.env.PORT ?? 7001;
     app.use(httpLogger);
 
-    app.enableCors({
-      origin: ['http://localhost:3000'], // or your frontend URL(s)
-      credentials: true,
-    });
- 
+  
     await app.listen(PORT);
 
     logger.info(`Server is running on port ${PORT}`);

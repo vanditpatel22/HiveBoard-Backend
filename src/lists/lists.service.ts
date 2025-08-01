@@ -4,6 +4,7 @@ import { Model, Types } from 'mongoose';
 import { List } from './list.schema';
 import { Board } from '../boards/board.schema';
 import { GatewayService } from '../gateway/gateway.service';
+import { CreateListDto } from './dto/create-list.dto';
 
 @Injectable()
 export class ListsService {
@@ -13,20 +14,21 @@ export class ListsService {
         private gatewayService: GatewayService,
     ) { }
 
-    async create(boardId: string, userId: string, title: string, position: number) {
+    async create(boardId: string, userId: string, body: CreateListDto) {
+
         const board = await this.boardModel.findById(boardId);
         if (!board) throw new NotFoundException('Board not found');
         if (!board.users.some((u: any) => u.equals(userId))) throw new ForbiddenException('No access');
-        const list = await this.listModel.create({ title, board: board._id, position, cards: [] });
-        
+        const list = await this.listModel.create({ board: board._id, ...body, cards: [] });
+
         // Initialize lists array if it doesn't exist
         if (!board.lists) {
             board.lists = [];
         }
-        
+
         board.lists.push(list._id as Types.ObjectId);
         await board.save();
-        this.gatewayService.broadcastListUpdated(board?._id!.toString() ?? "", list.toObject());
+        // this.gatewayService.broadcastListUpdated(board?._id!.toString() ?? "", list.toObject());
         return list.toObject();
     }
 
@@ -51,20 +53,21 @@ export class ListsService {
     }
 
     async delete(id: string, userId: string) {
-        const list = await this.listModel.findById(id);
+        
+        const list = await this.listModel.findById(new Types.ObjectId(id));
         if (!list) throw new NotFoundException('List not found');
         const board = await this.boardModel.findById(list.board);
         if (!board || !board.users.some((u: any) => u.equals(userId))) throw new ForbiddenException('No access');
-        
+
         // Initialize lists array if it doesn't exist
         if (!board.lists) {
             board.lists = [];
         }
-        
+
         board.lists = board.lists.filter((l: any) => !l.equals(list._id));
         await board.save();
         await list.deleteOne();
-        this.gatewayService.broadcastListUpdated(board?._id!.toString() ?? "", { _id: id, deleted: true });
+        // this.gatewayService.broadcastListUpdated(board?._id!.toString() ?? "", { _id: id, deleted: true });
         return { deleted: true, _id: id };
     }
 }
