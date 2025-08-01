@@ -16,6 +16,12 @@
   "text_invalid_email_or_password": "Invalid email or password",
   "text_email_required": "Please enter email",
   "text_password_required": "Please enter password",
-  "text_name_required": "Please enter name"
+  "text_name_required": "Please enter name",
+
+  "text_boards_fetched_succ": "Boards fetched successfully",
+  "text_boards_fetched_fail": "No boards found",
+  "text_board_created_succ": "Board created successfully",
+  "text_board_details_succ": "Board details fetched successfully",
+  "text_board_details_fail": "Board details not found"
 
 }

@@ -9,6 +9,7 @@ import { Board, BoardSchema } from 'src/boards/board.schema';
 
 @Module({
   imports: [
+    
     MongooseModule.forFeature([{ name: Card.name, schema: CardSchema }, { name: List.name, schema: ListSchema }, { name: Board.name, schema: BoardSchema }]),
     forwardRef(() => GatewayModule), // ✅ break the circular import
   ],

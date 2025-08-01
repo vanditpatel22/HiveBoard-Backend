@@ -9,6 +9,7 @@ import { List } from 'src/lists/list.schema';
 import { ListSchema } from 'src/lists/list.schema';
 import { Card } from 'src/cards/card.schema';
 import { CardSchema } from 'src/cards/card.schema';
+import { CommonModule } from 'src/common/common.module';
 
 @Module({
   imports: [
@@ -18,6 +19,7 @@ import { CardSchema } from 'src/cards/card.schema';
       { name: Card.name, schema: CardSchema }
     ]),
     forwardRef(() => GatewayModule),
+    CommonModule
   ],
   providers: [BoardsService, GatewayService],
   controllers: [BoardsController]

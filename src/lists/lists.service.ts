@@ -18,9 +18,15 @@ export class ListsService {
         if (!board) throw new NotFoundException('Board not found');
         if (!board.users.some((u: any) => u.equals(userId))) throw new ForbiddenException('No access');
         const list = await this.listModel.create({ title, board: board._id, position, cards: [] });
+        
+        // Initialize lists array if it doesn't exist
+        if (!board.lists) {
+            board.lists = [];
+        }
+        
         board.lists.push(list._id as Types.ObjectId);
         await board.save();
-        this.gatewayService.broadcastListUpdated(board?._id!.toString() ?? ""   , list.toObject());
+        this.gatewayService.broadcastListUpdated(board?._id!.toString() ?? "", list.toObject());
         return list.toObject();
     }
 
@@ -49,6 +55,12 @@ export class ListsService {
         if (!list) throw new NotFoundException('List not found');
         const board = await this.boardModel.findById(list.board);
         if (!board || !board.users.some((u: any) => u.equals(userId))) throw new ForbiddenException('No access');
+        
+        // Initialize lists array if it doesn't exist
+        if (!board.lists) {
+            board.lists = [];
+        }
+        
         board.lists = board.lists.filter((l: any) => !l.equals(list._id));
         await board.save();
         await list.deleteOne();
