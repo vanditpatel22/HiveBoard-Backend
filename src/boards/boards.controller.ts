@@ -97,6 +97,9 @@ export class BoardsController {
       const user = (req as Request & { user: AuthenticatedUser }).user;
       const board = await this.boardsService.findById(id, user.userId);
 
+      console.log(board,`board`);
+      
+
       if (board != null) {
 
         return this.responseUtil.sendResponse(

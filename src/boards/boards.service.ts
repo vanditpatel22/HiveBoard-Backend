@@ -99,6 +99,7 @@ export class BoardsService {
       .findById(id)
       .populate({
         path: 'lists',
+        options: { sort: { position: 1 } },
         populate: { path: 'cards', model: 'Card' }
       })
       .populate('users');
